@@ -58,13 +58,15 @@ WARBLER - app.py
 - how to store our secret key 
 - how to submit a form that uploads a file 
 - how to get the file from the server
+	- https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/object/get.html#S3.Object.get
 - how to store the file in S3 
 	- https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/put_object.html#
 	- 
 	- storing images: 
-		- Listing1/Image1
+		- Listing1/Image1 
 		- Listing1/Image2 
 		- Listing2/Image1 
+			- give object key names: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html
 - how to retrieve the file from S3 
 	- what key would we store on the Listing for the image? 
 	- How to retrieve the image?? 
@@ -84,6 +86,10 @@ WARBLER - app.py
 
 Do a test run 
 - using insomnia, can i post something in S3 
+
+
+Give server the credentials for writing/reading Bucket 
+- individual user does not need access to the bucket 
 - 
 
 ## Frontend 
