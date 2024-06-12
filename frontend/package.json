@@ -1,0 +1,33 @@
+{
+  "name": "rithmschool-start-js-react",
+  "version": "1.0.0",
+  "homepage": "https://github.com/rithmschool/start/",
+  "type": "module",
+  "scripts": {
+    "start": "vite --open",
+    "build": "vite build",
+    "test": "vitest",
+    "test:cov": "vitest --coverage"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "*",
+    "@testing-library/react": "*",
+    "@testing-library/user-event": "*",
+    "@tsconfig/vite-react": "*",
+    "@types/bootstrap": "*",
+    "@types/jsdom": "*",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "@vitejs/plugin-react": "*",
+    "jsdom": "*",
+    "vite": "*",
+    "vitest": "*",
+    "msw": "*"
+  },
+  "dependencies": {
+    "bootstrap": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-router-dom": "*"
+  }
+}
