@@ -9,6 +9,18 @@ Goals
 # TODO
 - discuss decision for holding all models in 1 file vs separate files for each
 
+
+```
+(Pdb) request.files
+ImmutableMultiDict([('image', <FileStorage: 'toast.jpeg' ('image/jpeg')>)])
+
+## pass in the FileStorage portion of tuple, not the whole thing 
+
+
+(Pdb) request.form
+ImmutableMultiDict([('dummy', 'hello')])
+```
+
 **Image Upload Process**
 
 1. User submits form
