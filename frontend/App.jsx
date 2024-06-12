@@ -1,30 +1,31 @@
 import { BrowserRouter } from "react-router-dom";
 import React from "react";
+import { sendImageToServer } from "./api/src/api/api";
 
-/** Jobly application.
- *
- * App -> { Navigation, Routes }
+/** Sharebnb Application
+ * FIXME:
+ * App
  */
 
 function App() {
   console.debug("App");
 
-  function handleImgSubmit(evt) {
+  /**Handling submission of image */
+  async function handleImgSubmit(evt) {
     evt.preventDefault();
+    //FIXME: this is all data, including other form data
     const imageData = new FormData();
-    imageData["image"] = evt.target.image.files[0];
+    imageData.append('image', evt.target.image.files[0]);
+    imageData.append('dummy', "hello");
 
     console.log("file data", imageData);
 
     // TODO: call API with this data
-    return imageData;
-    // const body = {
-
-    // }
-
-    // const url = ""
-
-    // const response = fetch(url, {method, body, headers})
+    try {
+      await sendImageToServer(imageData);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -32,6 +33,7 @@ function App() {
       App Placeholder Input Form
       <form onSubmit={handleImgSubmit}>
         <input type="file" name="image"></input>
+        <input type="text" name="dummy"></input>
         <button type="submit">Click Me</button>
       </form>
     </div>
