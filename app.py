@@ -1,14 +1,14 @@
 import os
-import boto3
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from dotenv import load_dotenv
 
-from flask import Flask
-from flask_debugtoolbar import DebugToolbarExtension
-
-from models import db, dbx
+from models import db
+from util.helpers import upload_file_to_s3
 
 # NOTES: study this again...
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     "DATABASE_URL", "postgresql:///sharebnb"
 )
@@ -16,25 +16,37 @@ app.config["SQLALCHEMY_ECHO"] = True
 app.config["SQLALCHEMY_RECORD_QUERIES"] = True
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 
-load_dotenv()
-
 app.config['aws_access_key_id'] = os.environ['aws_access_key_id']
 app.config['aws_secret_access_key'] = os.environ['aws_secret_access_key']
 
-S3_BUCKET = "sharebnb-38"
-
+load_dotenv()
 db.init_app(app)
 
+S3_BUCKET = "sharebnb-38"
 
-@app.post("/images")
-def upload_image(image_data):
 
-    body = image_data
-    key = ""
+@app.route('/profile')
+def my_profile():
+    response_body = {
+        "name": "Nagato",
+        "about": "Hello! I'm a full stack developer that loves python and javascript"
+    }
 
-    response = multipart_upload_part.upload(
+    return response_body
 
-    )
+# FIXME: figure out how to get the image inside request.files
+
+
+@app.post("/api/images")
+def upload_image():
+    breakpoint()
+    body = request.json["imageData"]
+    key = "test1"
+    print("!!!!BODY & KEY", body, key)
+
+    upload_file_to_s3(body)
+
+    # return jsonify({"test": "got here"})
 
     # def upload_content(key: str, origin_file_path: str):
     # s3 = boto3.resource('s3',
