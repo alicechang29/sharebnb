@@ -5,21 +5,56 @@ Goals
 - review core concepts 
 - learn websockets/maps 
 
+**Image Upload Process** 
+1. User submits form 
+2. Upon form submission, it triggers POST request to Flask 
+3. [In Flask, receive the image object ](https://medium.com/@kurararu/sending-image-and-text-with-formdata-4025a1fdeedb)
+5. [Convert the image object into binary](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/multipartuploadpart/upload.html#upload)
+6. Create an object key for the image object 
+7. Store the object key in the DB 
+8. [Make PUT request to S3 and upload image ](https://stackoverflow.com/questions/49330601/upload-file-to-s3-with-put-and-form-data)
+
+**Image Retrieval Process** 
+1. User visits page 
+2. Flask makes GET request to DB for listing info 
+3. Retrieve the array of Image Object Keys 
+4. Flask makes GET request to S3 for image and assigns a Temporary URL 
+5. Frontend awaits data 
+6. Client views data / images via Temp URL 
+
+
+
 # P0 
 ## Backend 
 
-### Data Model 
+**START HERE!!!!! JUNE 12** 
+1. finish the data models 
+2. write the API's for querying the models 
+### Listings Data Model 
+- Listing ID - Primary key 
+- User ID - Foreign Key 
+- Images: array of S3 Object Key values 
+	- Decide these values 
+- Description 
+- Title 
+- Price 
 
 - Data Model -- get code review here 
 - Data Model tests 
 - Data Validation (WTForms validator)
 
+### Users Model 
+- User ID - Primary Key 
 
-Users Model 
 
-Listing Model 
+SQL Queries
+- To find hosts, join on listings/Users 
+- [TODO: look up the db models ](https://rithm-students-assets.s3.amazonaws.com/r38/resources/sqla-cheatsheet/handout/index.html?AWSAccessKeyId=AKIA6I7NF475LYNA7YJL&Signature=FD3%2By6NXR5craqh6gnaojz9Ta1o%3D&Expires=1718197118#many-to-many-relationships)
 
-File Model 
+
+Write Helper functions / Middleware 
+
+
 
 Images: 
 Listing ID : [image{key, imageURL}, image, etc. ] 
@@ -55,23 +90,23 @@ WARBLER - app.py
 
 ### S3 
 - create an amazon acct -- DONE 
-- how to store our secret key 
-- how to submit a form that uploads a file 
-- how to get the file from the server
+- how to store our secret key  -- DONE 
+- how to submit a form that uploads a file  
+- how to get the file from the server -- DONE 
 	- https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/object/get.html#S3.Object.get
-- how to store the file in S3 
+- how to store the file in S3  
 	- https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3/client/put_object.html#
-	- 
 	- storing images: 
 		- Listing1/Image1 
 		- Listing1/Image2 
 		- Listing2/Image1 
 			- give object key names: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-keys.html
-- how to retrieve the file from S3 
+- how to retrieve the file from S3  -- DONE 
 	- what key would we store on the Listing for the image? 
 	- How to retrieve the image?? 
 - how is the file stored on the server ?? 
-- how to send send that file to the client 
+- how to send send that file to the client -- DONE 
+	- Temporary URL 
 
 
 **When user submits form with image:**
@@ -88,7 +123,7 @@ Do a test run
 - using insomnia, can i post something in S3 
 
 
-Give server the credentials for writing/reading Bucket 
+Give server the credentials for writing/reading Bucket -- DONE 
 - individual user does not need access to the bucket 
 - 
 
