@@ -1,4 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
+import React from "react";
 
 /** Jobly application.
  *
@@ -10,8 +11,13 @@ function App() {
 
   function handleImgSubmit(evt) {
     evt.preventDefault();
-    console.log("click event", evt.target.image);
+    const imageData = new FormData();
+    imageData["image"] = evt.target.image.files[0];
 
+    console.log("file data", imageData);
+
+    // TODO: call API with this data
+    return imageData;
     // const body = {
 
     // }
