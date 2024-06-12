@@ -6,6 +6,9 @@ Goals
 - review core concepts
 - learn websockets/maps
 
+# TODO
+- discuss decision for holding all models in 1 file vs separate files for each
+
 **Image Upload Process**
 
 1. User submits form
@@ -42,7 +45,6 @@ Goals
 - Title
 - Price
 - Zipcode
-- Address
 
 Methods
 
