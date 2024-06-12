@@ -59,6 +59,12 @@ class Listing(db.Model):
         back_populates="listings"
     )
 
+    images = db.relationship(
+        "Image",
+        back_populates="listing",
+        cascade="all, delete-orphan"
+    )
+
     def to_dict(self):
         """Serialize listing to a dict of listing info."""
 
@@ -212,3 +218,26 @@ class User(db.Model):
                 return user
 
         return False
+
+
+class Image(db.Model):
+    """Image"""
+
+    __tablename__ = "Images"
+
+    id = db.mapped_column(
+        db.Integer,
+        db.Identity(),
+        primary_key=True
+    )
+
+    listing_id = db.mapped_column(
+        db.String(100),
+        db.ForeignKey('listings.id', ondelete='CASCADE'),
+        nullable=False
+    )
+
+    listing = db.relationship(
+        "Listing",
+        back_populates=("images")
+    )
