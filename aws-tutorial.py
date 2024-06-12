@@ -62,6 +62,7 @@ for bucket in response['Buckets']:
     print(f'  {bucket["Name"]}')
 
 
+# FIXME: the origin file path should be the image object
 def upload_content(key: str, origin_file_path: str):
     s3 = boto3.resource('s3',
                         aws_access_key_id=app.config['aws_access_key_id'],
