@@ -46,8 +46,7 @@ Goals
 - Price
 - Zipcode
 
-Methods
-
+**Methods**
 - Create
 - Update
 - Delete
@@ -62,8 +61,7 @@ Methods
 - S3 Object Key - Primary Key
 - Listing ID - Foreign Key
 
-Method
-
+**Methods**
 - Create (add to db, fix object key, add to S3)
 - Update
 - Delete
@@ -78,6 +76,11 @@ Method
 - Address
 - Phone
 - Email
+
+Methods: 
+- signup 
+- authenticate 
+- 
 
 ### Messages Model - LATER
 
