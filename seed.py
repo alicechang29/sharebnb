@@ -1,5 +1,5 @@
 from app import app
-from models import db, Listing, User
+from models import db, Listing, User, Image
 
 app.app_context().push()
 
@@ -44,4 +44,12 @@ listing3 = Listing(
 
 
 db.session.add_all([listing1, listing2])
+db.session.commit()
+
+
+image1 = Image(
+    listing_id=1
+)
+
+db.session.add_all([image1])
 db.session.commit()
