@@ -1,52 +1,214 @@
+"""Listing Model for ShareBnB"""
 
-import os
-from dotenv import load_dotenv
+# TODO: discuss decision on keeping all models in one file
 
-from flask import Flask, render_template, request, flash, redirect, session, g
-from flask_debugtoolbar import DebugToolbarExtension
-from sqlalchemy.exc import IntegrityError
-
-from forms import UserAddForm, LoginForm, MessageForm
-from models import db, dbx, User, Message
-
-load_dotenv()
-
-# CURR_USER_KEY = "curr_user"
-
-app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-app.config['SQLALCHEMY_ECHO'] = False
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
-app.config['SQLALCHEMY_RECORD_QUERIES'] = True
-app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
-toolbar = DebugToolbarExtension(app)
-
-db.init_app(app)
+from flask_sqlalchemy import SQLAlchemy
 
 
-##############################################################################
-# General user routes:
+from flask_bcrypt import Bcrypt
+bcrypt = Bcrypt()
 
-@app.get('/users')
-def list_users():
-    """Page with listing of users.
+db = SQLAlchemy()
+dbx = db.session.execute
 
-    Can take a 'q' param in querystring to search by that username.
-    """
 
-    if not g.user:
-        flash("Access unauthorized.", "danger")
-        return redirect("/")
+DEFAULT_IMAGE_URL = (
+    "https://icon-library.com/images/default-user-icon/" +
+    "default-user-icon-28.jpg")
 
-    search = request.args.get('q')
 
-    if not search:
-        q = db.select(User).order_by(User.id.desc())
+class Listing(db.Model):
+    """Listing"""
 
-    else:
-        q = db.select(User).filter(User.username.like(f"%{search}%"))
+    __tablename__ = "listings"
 
-    users = dbx(q).scalars().all()
+    id = db.mapped_column(
+        db.Integer,
+        db.Identity(),
+        primary_key=True
+    )
 
-    return render_template('users/index.jinja', users=users)
+    host_username = db.mapped_column(
+        db.String(100),
+        db.ForeignKey('users.username', ondelete='CASCADE'),
+        nullable=False
+    )
+
+    title = db.mapped_column(
+        db.String(500),
+        nullable=False
+    )
+
+    description = db.mapped_column(
+        db.Text,
+        nullable=False
+    )
+
+    price = db.mapped_column(
+        db.Integer,
+        nullable=False
+    )
+
+    zipcode = db.mapped_column(
+        db.String(10),
+        nullable=False
+    )
+
+    user = db.relationship(
+        "User",
+        back_populates="listings"
+    )
+
+    def to_dict(self):
+        """Serialize listing to a dict of listing info."""
+
+        return {
+            "id": self.id,
+            "host_username": self.host_username,
+            "description": self.description,
+            "title": self.title,
+            "price": self.price,
+            "zipcode": self.zipcode
+        }
+
+    @classmethod
+    def create(cls, id, host_username, description, title, price, zipcode):
+        """Create a listing.
+
+        Add listing to the database
+        """
+
+        listing = Listing(
+            host_username=host_username,
+            title=title,
+            description=description,
+            price=price,
+            zipcode=zipcode
+        )
+
+        db.session.add(listing)
+        db.session.commit()
+        return listing
+
+# TODO: ask why we do db.sessio for add and a db query for delete??
+
+    @classmethod
+    def delete(self):
+        """Delete a listing."""
+
+        q = (db
+             .delete(Listing)
+             .filter_by(
+                 id=self.id
+             ))
+
+        dbx(q)
+        db.session.commit()
+
+    @classmethod
+    def update(self, updated_fields):
+        """Update a listing
+
+        updated_fields = {
+            description: STRING,
+            title: STRING,
+            price: NUMERIC,
+            zipcode: STRING
+        }
+        """
+
+        listing = db.session.get(Listing, self.id)
+        for key, value in updated_fields.items():
+            listing[key] = value
+
+        db.session.commit()
+
+
+class User(db.Model):
+    """User"""
+
+    __tablename__ = "users"
+
+    username = db.mapped_column(
+        db.String(100),
+        primary_key=True,
+        nullable=False
+    )
+
+    password = db.mapped_column(
+        db.String(100),
+        nullable=False,
+    )
+
+    email = db.mapped_column(
+        db.String(50),
+        nullable=False,
+        unique=True,
+    )
+
+    first_name = db.mapped_column(
+        db.String(100),
+        nullable=False
+    )
+
+    last_name = db.mapped_column(
+        db.String(100),
+        nullable=False
+    )
+
+    image_url = db.mapped_column(
+        db.String(255),
+        nullable=False,
+        default=DEFAULT_IMAGE_URL,
+    )
+
+    zipcode = db.mapped_column(
+        db.String(10),
+        nullable=False
+    )
+
+    listings = db.relationship(
+        "Listing",
+        back_populates="user",
+        cascade="all, delete-orphan")
+
+    @classmethod
+    def signup(cls, username, email, password, image_url=DEFAULT_IMAGE_URL):
+        """Sign up user.
+
+        Hashes password and adds user to session.
+        """
+
+        hashed_pwd = bcrypt.generate_password_hash(password).decode('UTF-8')
+
+        user = User(
+            username=username,
+            email=email,
+            password=hashed_pwd,
+            image_url=image_url,
+        )
+
+        db.session.add(user)
+        return user
+
+    @classmethod
+    def authenticate(cls, username, password):
+        """Find user with `username` and `password`.
+
+        This is a class method (call it on the class, not an individual user.)
+        It searches for a user whose password hash matches this password
+        and, if it finds such a user, returns that user object.
+
+        If this can't find matching user (or if password is wrong), returns
+        False.
+        """
+
+        q = db.select(cls).filter_by(username=username)
+        user = dbx(q).scalar_one_or_none()
+
+        if user:
+            is_auth = bcrypt.check_password_hash(user.password, password)
+            if is_auth:
+                return user
+
+        return False
