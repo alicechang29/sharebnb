@@ -70,19 +70,40 @@ def add_listing():
 
 
 @app.get("/api/listings")
-def get_listing(id):
+def get_all_listings():
 
-    print("RUNNING GET REQUEST")
-    object_key = "potato_salad.jpeg"
-    # would normally query the database using listing id
+    print("RUNNING GET ALL LISTINGS REQUEST")
+    q_listings = db.select(Listing)
+    listings = dbx(q_listings).scalars().all()
+    serialized_listings = [listing.serialize() for listing in listings]
 
-    image_url = create_presigned_url(
-        bucket_name=S3_BUCKET, object_key=object_key)
+    serialized_listings_w_images = []
 
-    return jsonify({"image_url": image_url})
+    for listing in serialized_listings:
+
+        print("in for loop with listing:", listing)
+        id = listing["id"]
+
+        q_images_object_keys = db.select(Image.image_object_key).where(
+            Image.listing_id == id)
+        image_object_keys = dbx(q_images_object_keys).scalars().all()
+
+        image_urls = []
+
+        for image_object_key in image_object_keys:
+            image_url = create_presigned_url(image_object_key)
+            image_urls.append(image_url)
+
+        listing["images"] = image_urls
+
+        serialized_listings_w_images.append(listing)
+
+    # seralized_listings
+
+    return jsonify(listings=serialized_listings_w_images)
 
 
-@app.get("/api/listings/<int:id>")
+@ app.get("/api/listings/<int:id>")
 def get_listing(id):
 
     print("RUNNING GET REQUEST")

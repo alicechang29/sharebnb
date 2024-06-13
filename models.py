@@ -68,7 +68,7 @@ class Listing(db.Model):
         cascade="all, delete-orphan"
     )
 
-    def to_dict(self):
+    def serialize(self):
         """Serialize listing to a dict of listing info."""
 
         return {

@@ -34,7 +34,7 @@ def upload_file_to_s3(object_key, file, acl="public-read"):
         return e
 
 
-def create_presigned_url(bucket_name, object_key, expiration=3600):
+def create_presigned_url(object_key):
     """Generate a presigned URL to share an S3 object
 
     :param bucket_name: string
@@ -49,8 +49,8 @@ def create_presigned_url(bucket_name, object_key, expiration=3600):
     try:
         response = S3_CLIENT.generate_presigned_url(
             'get_object',
-            Params={'Bucket': bucket_name, 'Key': object_key},
-            ExpiresIn=expiration)
+            Params={'Bucket': S3_BUCKET, 'Key': object_key},
+            ExpiresIn=3600)
         print("CREATING PRE SIGNED URL", response)
         return response
 
