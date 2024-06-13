@@ -26,13 +26,14 @@ Design Decision
   - Create an object_key for image  -- DONE 
   - update DB with listing information including Image object key  -- DONE 
   - update S3 Bucket - DONE
-- Flask - GET route by listing ID
-  - query the DB Listing table for the listing data by listing id
-  - query the DB Image table for all images by listing id
-  - Map over the Image query
-  - create the URL for each image
-  - Put all the **listing data** into an object
-	  - this needs to be serialized 
+- Flask - GET route by listing ID -- DONE 
+  - query the DB Listing table for the listing data by listing id -- DONE 
+  - query the DB Image table for all images by listing id -- DONE 
+  - Map over the Image query -- DONE 
+  - create the URL for each image -- DONE 
+  - Put all the **listing data** into an object -- DONE 
+	  - this needs to be serialized  -- DONE 
+- Flask - GET route for ALL Listings -- DONE 
   - Send the **listing data ** to Front end
 
 ```
@@ -53,7 +54,7 @@ ImmutableMultiDict(
   ('zipcode', '00000')])
 ```
 
-- Flask - GET route for ALL Listings
+
 - On React API
   - Create an async function to get a single listing data
   - Create async function to get all listing data
