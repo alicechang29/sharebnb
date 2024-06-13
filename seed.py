@@ -7,12 +7,22 @@ db.drop_all()
 db.create_all()
 
 user1 = User(
-    username="alice"
+    username="alice",
+    password="password",
+    email="alice@123.com",
+    first_name="Alice",
+    last_name="C",
+    zipcode="12345"
 )
 
 
 user2 = User(
-    username="andrea"
+    username="andrea",
+    password="password",
+    email="andrea@123.com",
+    first_name="Andrea",
+    last_name="J",
+    zipcode="12345"
 )
 
 db.session.add_all([user1, user2])
@@ -48,8 +58,16 @@ db.session.commit()
 
 
 image1 = Image(
+    image_object_key="https://icon-library.com/images/default-user-icon/" +
+    "default-user-icon-28.jpg",
     listing_id=1
 )
 
-db.session.add_all([image1])
+image2 = Image(
+    image_object_key="https://icon-library.com/images/default-user-icon/" +
+    "default-user-icon-28.jpg",
+    listing_id=1
+)
+
+db.session.add_all([image1, image2])
 db.session.commit()
