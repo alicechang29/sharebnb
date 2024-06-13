@@ -14,6 +14,7 @@ Goals
 # TODO
 
 **START HERE JUNE 13** 
+- Fix Image Model 
 - Flask - POST route 
 	- Create an object_key for image 
 	-  update DB with listing information including Image object key 
@@ -35,7 +36,6 @@ listing data = {
 ```
 
 - Flask - GET route for ALL Listings 
-- Fix Image Model 
 - On React API 
 	- Create an async function to get a single listing data 
 	- Create async function to get all listing data 
