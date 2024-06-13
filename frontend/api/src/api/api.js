@@ -14,9 +14,9 @@ async function sendImageToServer(image) {
 
   console.log({ apiData });
 
-  //SEND THIS TO FLASK
 }
 
+// TODO: add function for fetching listing data
 
 export { sendImageToServer };
 
