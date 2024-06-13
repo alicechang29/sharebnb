@@ -12,6 +12,11 @@ Goals
 4. send form data to db
 5. send file to s3
 
+Design Decision 
+- making the view function the conductor 
+- adds values to the DB 
+- sends the image to the S3 bucket 
+
 # TODO
 
 **START HERE JUNE 13**
