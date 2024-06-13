@@ -25,26 +25,21 @@ db.init_app(app)
 S3_BUCKET = "sharebnb-38"
 
 
-@app.route('/profile')
-def my_profile():
-    response_body = {
-        "name": "Nagato",
-        "about": "Hello! I'm a full stack developer that loves python and javascript"
-    }
-
-    return response_body
-
 # FIXME: figure out how to get the image inside request.files
 
 
 @app.post("/api/images")
 def upload_image():
-    breakpoint()
-    body = request.json["imageData"]
+    # breakpoint()
+    file = request.files['image']
     key = "test1"
-    print("!!!!BODY & KEY", body, key)
+    print("!!!!BODY & KEY", file, key)
 
-    upload_file_to_s3(body)
+    upload_file_to_s3(key=key, file=file)
+
+    return jsonify({"upload": "ok!"})
+
+    # upload_file_to_s3(key, body)
 
     # return jsonify({"test": "got here"})
 
