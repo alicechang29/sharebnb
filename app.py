@@ -25,12 +25,15 @@ db.init_app(app)
 S3_BUCKET = "sharebnb-38"
 
 
-@app.post("/api/images")
+@app.post("/api/add-listing")
 def upload_image():
     # breakpoint()
     file = request.files['image']
+    listing_data = request.form
     object_key = "test1"
+
     print("!!!!BODY & KEY", file, object_key)
+    print("!!! LISTING DATA", listing_data)
 
     upload_file_to_s3(object_key=object_key, file=file)
 

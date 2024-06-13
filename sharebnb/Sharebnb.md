@@ -9,56 +9,65 @@ Goals
 1. get the form data (form values + file )
 2. send to the flask server via api (make this generic)
 3. on flask server:
-1. send form data to db
-2. send file to s3
+4. send form data to db
+5. send file to s3
+
 # TODO
 
-**START HERE JUNE 13** 
-- Fix Image Model 
-- Flask - POST route 
-	- Create an object_key for image 
-	-  update DB with listing information including Image object key 
-	- update S3 Bucket - DONE 
-- Flask - GET route by listing ID 
-	- query the DB Listing table for the listing data by listing id 
-	- query the DB Image table for all images by listing id 
-	- Map over the Image query
-	- create the URL for each image 
-	- Put all the **listing data** into an object 
-	- Send the **listing data ** to Front end 
+**START HERE JUNE 13**
+
+- Fix Image Model
+- Flask - POST route
+  - Create an object_key for image
+  - update DB with listing information including Image object key
+  - update S3 Bucket - DONE
+- Flask - GET route by listing ID
+  - query the DB Listing table for the listing data by listing id
+  - query the DB Image table for all images by listing id
+  - Map over the Image query
+  - create the URL for each image
+  - Put all the **listing data** into an object
+  - Send the **listing data ** to Front end
 
 ```
 listing data = {
-	listing id 
-	listing title 
+	listing id
+	listing title
 	images: [image url, image url...]
 }
 ```
 
-- Flask - GET route for ALL Listings 
-- On React API 
-	- Create an async function to get a single listing data 
-	- Create async function to get all listing data 
-- On React App 
-	- Display the listing data for each item in listing obj 
+```
+request.form =
+ImmutableMultiDict(
+  [('title', 'Title1'),
+  ('description',
+  'Test Description1'),
+  ('price', '10000'),
+  ('zipcode', '00000')])
+```
 
+- Flask - GET route for ALL Listings
+- On React API
+  - Create an async function to get a single listing data
+  - Create async function to get all listing data
+- On React App
 
-
-
-
+  - Display the listing data for each item in listing obj
 
 - discuss decision for holding all models in 1 file vs separate files for each
 
 1. get the form data (form values + file )
 2. send to the flask server via api (make this generic)
-3. on flask server: 
-	1. send form data to db 
-	2. send file to s3 
+3. on flask server:
+   1. send form data to db
+   2. send file to s3
+
 ```
 (Pdb) request.files
 ImmutableMultiDict([('image', <FileStorage: 'toast.jpeg' ('image/jpeg')>)])
 
-## pass in the FileStorage portion of tuple, not the whole thing 
+## pass in the FileStorage portion of tuple, not the whole thing
 
 
 (Pdb) request.form
@@ -103,6 +112,7 @@ ImmutableMultiDict([('dummy', 'hello')])
 - Zipcode
 
 **Methods**
+
 - Create
 - Update
 - Delete
@@ -118,6 +128,7 @@ ImmutableMultiDict([('dummy', 'hello')])
 - Listing ID - Foreign Key
 
 **Methods**
+
 - Create (add to db, fix object key, add to S3)
 - Update
 - Delete
@@ -133,10 +144,11 @@ ImmutableMultiDict([('dummy', 'hello')])
 - Phone
 - Email
 
-Methods: 
-- signup 
-- authenticate 
-- 
+Methods:
+
+- signup
+- authenticate
+-
 
 ### Messages Model - LATER
 
@@ -172,7 +184,7 @@ Image = {
 - API routes to DB
   - Get
     - get all houses
-    - Get by listing ID 
+    - Get by listing ID
   - Post
     - New House
     - Register new user

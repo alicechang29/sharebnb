@@ -16,10 +16,13 @@ function App() {
     console.log("!!!!!", evt.target.multifiles.files);
     //FIXME: this is all data, including other form data
     const formData = new FormData();
-    formData.append('image', evt.target.image.files[0]);
+    formData.append("image", evt.target.image.files[0]);
     //TODO: to handle multiple images, need to append each individually to formData. THIS IS NOT AN ARRAY, FILELIST IS ITS OWN OBJECT
     // formData.append('multi-images', evt.target.multifiles.files);
-    formData.append('text-test', "hello");
+    formData.append("title", evt.target.title.value);
+    formData.append("description", evt.target.description.value);
+    formData.append("price", evt.target.price.value);
+    formData.append("zipcode", evt.target.zipcode.value);
 
     console.log("file data", formData);
 
@@ -35,9 +38,17 @@ function App() {
     <div className="App">
       App Placeholder Input Form
       <form onSubmit={handleFormSubmit}>
+        <label htmlFor="title">Listing Title</label>
+        <input type="text" name="title"></input>
+        <label htmlFor="description">Description</label>
+        <input type="text" name="description"></input>
+        <label htmlFor="price">Price</label>
+        <input type="text" name="price"></input>
+        <label htmlFor="zipcode">Zipcode</label>
+        <input type="text" name="zipcode"></input>
+        <label htmlFor="image">Listing Image</label>
         <input type="file" name="image"></input>
         <input type="file" id="files" name="multifiles" multiple></input>
-        <input type="text" name="text-test"></input>
         <button type="submit">Click Me</button>
       </form>
     </div>
