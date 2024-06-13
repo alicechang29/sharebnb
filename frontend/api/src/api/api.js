@@ -1,6 +1,6 @@
 
 /** Sends image data to Flask server*/
-async function sendImageToServer(image) {
+async function sendFormDataToServer(image) {
   console.log("addImageToS3", image);
   const resp = await fetch('http://localhost:5001/api/images', {
     method: "POST",
@@ -18,5 +18,5 @@ async function sendImageToServer(image) {
 
 // TODO: add function for fetching listing data
 
-export { sendImageToServer };
+export { sendFormDataToServer };
 
