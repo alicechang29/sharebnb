@@ -29,7 +29,7 @@ db.init_app(app)
 S3_BUCKET = "sharebnb-38"
 
 
-@app.post("/api/add-listing")
+@app.post("/add-listing")
 def add_listing():
     """ Given listing data from form submit,
     Generates an image_object_key for storing image in S3 Bucket
@@ -70,7 +70,7 @@ def add_listing():
     return jsonify({"listing_upload": "ok!"})
 
 
-@app.get("/api/listings")
+@app.get("/listings")
 def get_all_listings():
     """Gets all listings from DB and query for all images related to each
     listing.
@@ -106,7 +106,7 @@ def get_all_listings():
     return jsonify(listings=serialized_listings_w_images)
 
 
-@ app.get("/api/listings/<int:listing_id>")
+@ app.get("/listings/<int:listing_id>")
 def get_single_listing(listing_id):
     """Return JSON of a single listing
     {'listing': id, title, description, price, zipcode, images: [image_url,...]}

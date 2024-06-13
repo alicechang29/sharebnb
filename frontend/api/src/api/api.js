@@ -6,7 +6,8 @@ async function sendFormDataToServer(formData) {
   //FIXME:  do a try - return an ok message
   //catch - return the err and have the front end handle the error
 
-  const resp = await fetch('http://localhost:5001/api/add-listing', {
+  //FIXME: need to update the BASE_URL HERE
+  const resp = await fetch('http://localhost:5001/add-listing', {
     method: "POST",
     header: {
       'Content-Type': 'multipart/form-data'
