@@ -19,13 +19,16 @@ S3_CLIENT = boto3.client(
 )
 
 
-def upload_file_to_s3(object_key, file, acl="public-read"):
+def upload_file_to_s3(object_key, file):
     try:
-        S3_CLIENT.upload_fileobj(file, S3_BUCKET, object_key)
+        S3_CLIENT.upload_fileobj(file, S3_BUCKET, object_key, ExtraArgs={
+            'ContentType': 'image/jpeg',
+            'ACL': 'public-read',
+        })
         print("added file to S3", file)
     # don't catch the error here at all - causes backend will crash and send 500 to React
     except Exception as e:
-        print("Something Happened: ", e, file, object_key, acl)
+        print("Something Happened: ", e, file, object_key)
         raise Exception("unable to upload to s3")
 
 
