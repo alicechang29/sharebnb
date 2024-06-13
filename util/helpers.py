@@ -4,8 +4,6 @@ import uuid
 import os
 from dotenv import load_dotenv
 from flask import Flask
-
-
 from botocore.exceptions import ClientError
 
 load_dotenv()
@@ -22,16 +20,13 @@ S3_CLIENT = boto3.client(
 
 
 def upload_file_to_s3(object_key, file, acl="public-read"):
-    # filename = secure_filename(file.filename)
     try:
         S3_CLIENT.upload_fileobj(file, S3_BUCKET, object_key)
         print("added file to S3", file)
-        return file
-
+    # don't catch the error here at all - causes backend will crash and send 500 to React
     except Exception as e:
-        # This is a catch all exception, edit this part to fit your needs.
-        print("Something Happened: ", e)
-        return e
+        print("Something Happened: ", e, file, object_key, acl)
+        raise Exception("unable to upload to s3")
 
 
 def create_presigned_url(bucket_name, object_key, expiration=3600):
