@@ -60,6 +60,7 @@ def create_presigned_url(bucket_name, object_key, expiration=3600):
 
 
 def create_object_key():
+    """Generate an object_key for the image using UUID"""
     object_key = str(uuid.uuid4())
 
     return object_key
