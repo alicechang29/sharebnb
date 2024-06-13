@@ -16,6 +16,8 @@ DEFAULT_IMAGE_URL = (
     "https://icon-library.com/images/default-user-icon/" +
     "default-user-icon-28.jpg")
 
+TEST_HOST_USERNAME = "alice"
+
 
 class Listing(db.Model):
     """Listing"""
@@ -31,7 +33,8 @@ class Listing(db.Model):
     host_username = db.mapped_column(
         db.String(100),
         db.ForeignKey('users.username', ondelete='CASCADE'),
-        nullable=False
+        nullable=False,
+        default=TEST_HOST_USERNAME
     )
 
     title = db.mapped_column(
@@ -78,14 +81,15 @@ class Listing(db.Model):
         }
 
     @classmethod
-    def create(cls, id, host_username, description, title, price, zipcode):
+    def create(cls, title, description, price, zipcode):
         """Create a listing.
 
         Add listing to the database
+        #FIXME: add host_username back into create
         """
 
         listing = Listing(
-            host_username=host_username,
+            host_username=TEST_HOST_USERNAME,
             title=title,
             description=description,
             price=price,
@@ -94,6 +98,8 @@ class Listing(db.Model):
 
         db.session.add(listing)
         db.session.commit()
+
+        print("listing created")
         return listing
 
 # TODO: ask why we do db.sessio for add and a db query for delete??
@@ -225,15 +231,10 @@ class Image(db.Model):
 
     __tablename__ = "images"
 
-    id = db.mapped_column(
-        db.Integer,
-        db.Identity(),
-        primary_key=True
-    )
-
     image_object_key = db.mapped_column(
         db.String(1500),
         nullable=False,
+        primary_key=True
     )
 
     listing_id = db.mapped_column(
@@ -246,3 +247,21 @@ class Image(db.Model):
         "Listing",
         back_populates="images"
     )
+
+    @classmethod
+    def create(cls, listing_id, image_object_key):
+        """Create an image.
+
+        Add image to the database
+        """
+
+        image = Image(
+            listing_id=listing_id,
+            image_object_key=image_object_key
+        )
+
+        db.session.add(image)
+        db.session.commit()
+
+        print("listing created")
+        return image
