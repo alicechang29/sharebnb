@@ -25,9 +25,6 @@ db.init_app(app)
 S3_BUCKET = "sharebnb-38"
 
 
-# FIXME: figure out how to get the image inside request.files
-
-
 @app.post("/api/images")
 def upload_image():
     # breakpoint()
