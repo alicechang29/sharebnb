@@ -66,7 +66,20 @@ def add_listing():
         listing_id=listing_id
     )
 
-    return jsonify({"upload": "ok!"})
+    return jsonify({"listing_upload": "ok!"})
+
+
+@app.get("/api/listings")
+def get_listing(id):
+
+    print("RUNNING GET REQUEST")
+    object_key = "potato_salad.jpeg"
+    # would normally query the database using listing id
+
+    image_url = create_presigned_url(
+        bucket_name=S3_BUCKET, object_key=object_key)
+
+    return jsonify({"image_url": image_url})
 
 
 @app.get("/api/listings/<int:id>")

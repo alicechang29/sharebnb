@@ -16,7 +16,7 @@ DEFAULT_IMAGE_URL = (
     "https://icon-library.com/images/default-user-icon/" +
     "default-user-icon-28.jpg")
 
-TEST_HOST_USERNAME = "DEFAULT_USER"
+TEST_HOST_USERNAME = "default_username"
 
 
 class Listing(db.Model):

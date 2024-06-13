@@ -24,3 +24,6 @@ async function sendFormDataToServer(formData) {
 
 export { sendFormDataToServer };
 
+
+
+// TODO: function for calling get route, no need from props

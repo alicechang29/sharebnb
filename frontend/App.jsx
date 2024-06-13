@@ -10,6 +10,7 @@ import { sendFormDataToServer } from "./api/src/api/api";
 function App() {
   console.debug("App");
 
+  // TODO: ask do we handle upon submit? or in API.js?
   /**Handling submission of image */
   async function handleFormSubmit(evt) {
     evt.preventDefault();
@@ -33,6 +34,8 @@ function App() {
       console.log(err);
     }
   }
+
+  // Set state for all listings
 
   return (
     <div className="App">
