@@ -94,3 +94,13 @@ def downloadFile():
 
 # download_content('potato_salad.jpeg')
 #  downloadFile()
+
+    # upload_file_to_s3(key, body)
+
+    # return jsonify({"test": "got here"})
+
+    # def upload_content(key: str, origin_file_path: str):
+    # s3 = boto3.resource('s3',
+    #                     aws_access_key_id=app.config['aws_access_key_id'],
+    #                     aws_secret_access_key=app.config['aws_secret_access_key'])
+    # s3.Bucket(S3_BUCKET).upload_file(origin_file_path, key)

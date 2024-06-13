@@ -4,7 +4,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 
 from models import db
-from util.helpers import upload_file_to_s3
+from util.helpers import upload_file_to_s3, create_presigned_url
 
 # NOTES: study this again...
 app = Flask(__name__)
@@ -32,19 +32,27 @@ S3_BUCKET = "sharebnb-38"
 def upload_image():
     # breakpoint()
     file = request.files['image']
-    key = "test1"
-    print("!!!!BODY & KEY", file, key)
+    object_key = "test1"
+    print("!!!!BODY & KEY", file, object_key)
 
-    upload_file_to_s3(key=key, file=file)
+    upload_file_to_s3(object_key=object_key, file=file)
 
     return jsonify({"upload": "ok!"})
 
-    # upload_file_to_s3(key, body)
+#  Need a get request to a listing ID
+# should get generate presigned with a bucket_name and object_name
+# no need to worry about bucket_name, object_name get from db
+# use potato_salad.jpeg for test
 
-    # return jsonify({"test": "got here"})
 
-    # def upload_content(key: str, origin_file_path: str):
-    # s3 = boto3.resource('s3',
-    #                     aws_access_key_id=app.config['aws_access_key_id'],
-    #                     aws_secret_access_key=app.config['aws_secret_access_key'])
-    # s3.Bucket(S3_BUCKET).upload_file(origin_file_path, key)
+@app.get("/api/listings/<int:id>")
+def get_listing(id):
+
+    print("RUNNING GET REQUEST")
+    object_key = "potato_salad.jpeg"
+    # would normally query the database using listing id
+
+    image_url = create_presigned_url(
+        bucket_name=S3_BUCKET, object_key=object_key)
+
+    return jsonify({"image_url": image_url})
