@@ -21,10 +21,10 @@ Design Decision
 
 **START HERE JUNE 13**
 
-- Fix Image Model
-- Flask - POST route
-  - Create an object_key for image
-  - update DB with listing information including Image object key
+- Fix Image Model -- DONE 
+- Flask - POST route  -- DONE 
+  - Create an object_key for image  -- DONE 
+  - update DB with listing information including Image object key  -- DONE 
   - update S3 Bucket - DONE
 - Flask - GET route by listing ID
   - query the DB Listing table for the listing data by listing id
@@ -32,6 +32,7 @@ Design Decision
   - Map over the Image query
   - create the URL for each image
   - Put all the **listing data** into an object
+	  - this needs to be serialized 
   - Send the **listing data ** to Front end
 
 ```
