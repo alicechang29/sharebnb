@@ -1,30 +1,55 @@
+/** API calls for ShareBnB.
+ *
+ * Static class tying together methods used to get/send to the API.
+ */
 
-/** Sends image data to Flask server*/
-async function sendFormDataToServer(formData) {
-  console.log("add data server", formData);
 
-  //FIXME:  do a try - return an ok message
-  //catch - return the err and have the front end handle the error
+class ShareBnBAPI {
 
-  //FIXME: need to update the BASE_URL HERE
-  const resp = await fetch('http://localhost:5001/add-listing', {
-    method: "POST",
-    header: {
-      'Content-Type': 'multipart/form-data'
-    },
-    body: formData
+  static base_api_url = "http://localhost:5001"; //TODO: update to .env base url
+
+  /** Sends image data to Flask server*/
+  static async sendFormDataToServer(formData) {
+    console.log("add data server", formData);
+
+    //FIXME:  do a try & catch - return the err and have the front end handle the error
+
+    //FIXME: need to update the BASE_URL HERE
+    const resp = await fetch(`${this.base_api_url}/add-listing`, {
+      method: "POST",
+      header: {
+        'Content-Type': 'multipart/form-data'
+      },
+      body: formData
+    });
+    const apiData = await resp.json();
+    console.log({ apiData });
   }
-  );
-  const apiData = await resp.json();
 
-  console.log({ apiData });
+  /** getAllListings
+   * Fetch list of listings
+   * [{id, host_username, title, description, price, zipcode}, ...]
+   **/
 
+  static async getAllListings() {
+    console.log("getListings");
+    const response = await fetch(`${this.base_api_url}/listings`);
+    return await response.json();
+  }
+
+  /** getListing
+   * Fetch a single listing
+   * {id, host_username, title, description, price, zipcode}
+   **/
+  static async getListing(id) {
+    console.log("getListing");
+    const response = await fetch(`${this.base_api_url}/listings/${id}`);
+    return await response.json();
+  }
 }
 
-// TODO: add function for fetching listing data
 
-export { sendFormDataToServer };
-
+export default ShareBnBAPI;
 
 
-// TODO: function for calling get route, no need from props
+
