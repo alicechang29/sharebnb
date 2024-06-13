@@ -20,11 +20,16 @@ S3_CLIENT = boto3.client(
 
 
 def upload_file_to_s3(object_key, file):
+    """Uploads a file to s3 bucket"""
     try:
-        S3_CLIENT.upload_fileobj(file, S3_BUCKET, object_key, ExtraArgs={
-            'ContentType': 'image/jpeg',
-            'ACL': 'public-read',
-        })
+        S3_CLIENT.upload_fileobj(
+            file,
+            S3_BUCKET,
+            object_key,
+            ExtraArgs={
+                'ContentType': 'image/jpeg',
+                'ACL': 'public-read',
+            })
         print("added file to S3", file)
     # don't catch the error here at all - causes backend will crash and send 500 to React
     except Exception as e:
@@ -62,3 +67,17 @@ def create_object_key():
     object_key = str(uuid.uuid4())
 
     return object_key
+
+
+def assign_url_for_images(image_object_keys):
+    """Generates image url for each item within image_object_keys list
+    Given: [image_object_key,...]
+    Returns: [url,...]
+    """
+    image_urls = []
+
+    for image_object_key in image_object_keys:
+        image_url = create_presigned_url(image_object_key)
+        image_urls.append(image_url)
+
+    return image_urls
