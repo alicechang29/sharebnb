@@ -6,10 +6,54 @@ Goals
 - review core concepts
 - learn websockets/maps
 
+1. get the form data (form values + file )
+2. send to the flask server via api (make this generic)
+3. on flask server:
+1. send form data to db
+2. send file to s3
 # TODO
+
+**START HERE JUNE 13** 
+- Flask - POST route 
+	- Create an object_key for image 
+	-  update DB with listing information including Image object key 
+	- update S3 Bucket - DONE 
+- Flask - GET route by listing ID 
+	- query the DB Listing table for the listing data by listing id 
+	- query the DB Image table for all images by listing id 
+	- Map over the Image query
+	- create the URL for each image 
+	- Put all the **listing data** into an object 
+	- Send the **listing data ** to Front end 
+
+```
+listing data = {
+	listing id 
+	listing title 
+	images: [image url, image url...]
+}
+```
+
+- Flask - GET route for ALL Listings 
+- Fix Image Model 
+- On React API 
+	- Create an async function to get a single listing data 
+	- Create async function to get all listing data 
+- On React App 
+	- Display the listing data for each item in listing obj 
+
+
+
+
+
+
 - discuss decision for holding all models in 1 file vs separate files for each
 
-
+1. get the form data (form values + file )
+2. send to the flask server via api (make this generic)
+3. on flask server: 
+	1. send form data to db 
+	2. send file to s3 
 ```
 (Pdb) request.files
 ImmutableMultiDict([('image', <FileStorage: 'toast.jpeg' ('image/jpeg')>)])
@@ -128,6 +172,7 @@ Image = {
 - API routes to DB
   - Get
     - get all houses
+    - Get by listing ID 
   - Post
     - New House
     - Register new user
