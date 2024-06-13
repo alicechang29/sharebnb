@@ -4,7 +4,9 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 
 from models import db
-from util.helpers import upload_file_to_s3, create_presigned_url
+from util.helpers import (upload_file_to_s3,
+                          create_presigned_url,
+                          create_object_key)
 
 # NOTES: study this again...
 app = Flask(__name__)
@@ -26,16 +28,23 @@ S3_BUCKET = "sharebnb-38"
 
 
 @app.post("/api/add-listing")
-def upload_image():
-    # breakpoint()
-    file = request.files['image']
+def add_listing():
+
+    listing_images = request.files['image']
+    image_object_key = create_object_key()
+    print("upload listing images", listing_images)
+
+    upload_file_to_s3(object_key=image_object_key, file=listing_images)
+
+    # save data to database
+
     listing_data = request.form
-    object_key = "test1"
 
-    print("!!!!BODY & KEY", file, object_key)
-    print("!!! LISTING DATA", listing_data)
-
-    upload_file_to_s3(object_key=object_key, file=file)
+    title = listing_data.get("title")
+    description = listing_data.get("description")
+    price = listing_data.get("price")
+    zipcode = listing_data.get("zipcode")
+    print("save listing details", title, description, price, zipcode)
 
     return jsonify({"upload": "ok!"})
 

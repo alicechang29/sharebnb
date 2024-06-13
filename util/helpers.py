@@ -1,8 +1,10 @@
 import boto3
 import logging
+import uuid
 import os
 from dotenv import load_dotenv
 from flask import Flask
+
 
 from botocore.exceptions import ClientError
 
@@ -55,3 +57,9 @@ def create_presigned_url(bucket_name, object_key, expiration=3600):
     except ClientError as e:
         logging.error(e)
         return None
+
+
+def create_object_key():
+    object_key = str(uuid.uuid4())
+
+    return object_key
