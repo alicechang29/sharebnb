@@ -3,7 +3,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-from models import db
+from models import db, dbx, Listing, Image, User
+
 from util.helpers import (upload_file_to_s3,
                           create_presigned_url,
                           create_object_key)
@@ -29,29 +30,43 @@ S3_BUCKET = "sharebnb-38"
 
 @app.post("/api/add-listing")
 def add_listing():
+    """ Given listing data from form submit,
+    Generates an image_object_key for storing image in S3 Bucket
+    Uploads image to S3 Bucket
 
+    Adds new listing to Listing table in DB
+    Adds new image to Images table in DB
+    """
+
+    # send image to S3
     listing_images = request.files['image']
-    image_object_key = create_object_key()
     print("upload listing images", listing_images)
 
+    image_object_key = create_object_key()
     upload_file_to_s3(object_key=image_object_key, file=listing_images)
 
     # save data to database
-
     listing_data = request.form
 
     title = listing_data.get("title")
     description = listing_data.get("description")
     price = listing_data.get("price")
     zipcode = listing_data.get("zipcode")
-    print("save listing details", title, description, price, zipcode)
+
+    new_listing = Listing.create(
+        title=title,
+        description=description,
+        price=price,
+        zipcode=zipcode)
+
+    listing_id = new_listing.id
+
+    Image.create(
+        image_object_key=image_object_key,
+        listing_id=listing_id
+    )
 
     return jsonify({"upload": "ok!"})
-
-#  Need a get request to a listing ID
-# should get generate presigned with a bucket_name and object_name
-# no need to worry about bucket_name, object_name get from db
-# use potato_salad.jpeg for test
 
 
 @app.get("/api/listings/<int:id>")
