@@ -7,7 +7,8 @@ from models import db, dbx, Listing, Image, User
 
 from util.helpers import (upload_file_to_s3,
                           create_presigned_url,
-                          create_object_key)
+                          create_object_key,
+                          assign_url_for_images)
 
 # NOTES: study this again...
 app = Flask(__name__)
@@ -71,8 +72,12 @@ def add_listing():
 
 @app.get("/api/listings")
 def get_all_listings():
-
-    print("RUNNING GET ALL LISTINGS REQUEST")
+    """Gets all listings from DB and query for all images related to each
+    listing.
+    Generates a temporary pre-signed URL for each image
+    Returns json of:
+    [{id, title, description, price, zipcode, images: [image_url,...]}]
+    """
     q_listings = db.select(Listing)
     listings = dbx(q_listings).scalars().all()
     serialized_listings = [listing.serialize() for listing in listings]
@@ -80,8 +85,8 @@ def get_all_listings():
     serialized_listings_w_images = []
 
     for listing in serialized_listings:
-
         print("in for loop with listing:", listing)
+
         id = listing["id"]
 
         q_images_object_keys = db.select(Image.image_object_key).where(
@@ -98,19 +103,26 @@ def get_all_listings():
 
         serialized_listings_w_images.append(listing)
 
-    # seralized_listings
-
     return jsonify(listings=serialized_listings_w_images)
 
 
-@ app.get("/api/listings/<int:id>")
-def get_listing(id):
+@ app.get("/api/listings/<int:listing_id>")
+def get_single_listing(listing_id):
+    """Return JSON of a single listing
+    {'listing': id, title, description, price, zipcode, images: [image_url,...]}
+    """
 
-    print("RUNNING GET REQUEST")
-    object_key = "potato_salad.jpeg"
-    # would normally query the database using listing id
+    # get listing by id
+    listing = db.get_or_404(Listing, listing_id)
+    serialized_listing = listing.serialize()
 
-    image_url = create_presigned_url(
-        bucket_name=S3_BUCKET, object_key=object_key)
+    # get all images for the listing
+    q_images_object_keys = db.select(Image.image_object_key).where(
+        Image.listing_id == listing_id)
+    image_object_keys = dbx(q_images_object_keys).scalars().all()
+    image_urls = assign_url_for_images(image_object_keys)
 
-    return jsonify({"image_url": image_url})
+    # add list of images to serialized_listing
+    serialized_listing["images"] = image_urls
+
+    return jsonify(listing=serialized_listing)
