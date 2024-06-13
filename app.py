@@ -48,10 +48,10 @@ def add_listing():
     # save data to database
     listing_data = request.form
 
-    title = listing_data.get("title")
-    description = listing_data.get("description")
-    price = listing_data.get("price")
-    zipcode = listing_data.get("zipcode")
+    title = listing_data["title"]
+    description = listing_data["description"]
+    price = listing_data["price"]
+    zipcode = listing_data["zipcode"]
 
     new_listing = Listing.create(
         title=title,
