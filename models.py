@@ -223,7 +223,7 @@ class User(db.Model):
 class Image(db.Model):
     """Image"""
 
-    __tablename__ = "Images"
+    __tablename__ = "images"
 
     id = db.mapped_column(
         db.Integer,
@@ -231,13 +231,18 @@ class Image(db.Model):
         primary_key=True
     )
 
+    image_object_key = db.mapped_column(
+        db.String(1500),
+        nullable=False,
+    )
+
     listing_id = db.mapped_column(
-        db.String(100),
+        db.Integer,
         db.ForeignKey('listings.id', ondelete='CASCADE'),
         nullable=False
     )
 
     listing = db.relationship(
         "Listing",
-        back_populates=("images")
+        back_populates="images"
     )
