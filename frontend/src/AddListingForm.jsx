@@ -80,9 +80,9 @@ function AddListingForm({ addListing }) {
     <div className="pt-5 pb-20">
       <form className="AddListingForm w-3/4 m-auto" onSubmit={handleSubmit}>
         <div className="space-y-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">
+          <h1 className="text-base font-semibold leading-7 text-gray-900 ml-auto mr-auto text-center">
             Add Listing
-          </h2>
+          </h1>
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="col-span-full sm:col-span-4">
