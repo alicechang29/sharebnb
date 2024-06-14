@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import AddListingForm from "./AddListingForm.jsx";
 import Listings from "./Listings.jsx";
 import Home from "./Home.jsx";
+import ListingLoader from "./ListingLoader.jsx";
 
 /** Site-wide routes.
  *
@@ -22,6 +23,9 @@ function RoutesList({ listings, addListing }) {
         <Route
           path="/listings"
           element={<Listings listings={listings} />} />
+        <Route
+          path="/listings/:id"
+          element={<ListingLoader listings={listings} cantFindPath="/listings" />} />
         <Route
           path="/add-listing"
           element={<AddListingForm addListing={addListing} />}
