@@ -21,13 +21,13 @@ Design Decision
 
 **START HERE JUNE 14**
 - fix the form 
-- single listing component 
-- nav bar component 
+- single listing component -- DONE 
+- nav bar component -- DONE 
 	- https://tailwindui.com/components/application-ui/navigation/navbars
-- add tailwind to form 
+- add tailwind to form  
 	- https://tailwindui.com/components/application-ui/forms/form-layouts
 - format homepage 
-- make seed data 
+- make seed data -- DONE 
 - RIGHT AFTER LUNCH, PREPARE OUR DECK 
 	- https://docs.google.com/document/d/1I1NsKqkLS4aaGmhdxzuI57jfyIOe390E7sAiewHgSUA/edit
 	- our design flow 

@@ -30,6 +30,9 @@ function RoutesList({ listings, addListing }) {
           path="/add-listing"
           element={<AddListingForm addListing={addListing} />}
         />
+        <Route
+          path="*"
+          element={<p>Hmmm. I can't seem to find what you want.</p>} />
       </Routes>
     </div>
   );

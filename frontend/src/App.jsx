@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
-// TODO: import NavBar from "./routes-nav/NavBar.jsx";
+import NavBar from "./NavBar.jsx";
 import RoutesList from "./RoutesList.jsx";
 import ShareBnBAPI from "./api.js";
 
@@ -65,6 +65,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        <NavBar />
         <RoutesList listings={listings} addListing={addListing} />
       </div>
     </BrowserRouter>
