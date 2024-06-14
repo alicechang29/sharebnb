@@ -1,4 +1,4 @@
-import { Card, CardBody, CardTitle, CardText } from "reactstrap";
+import { Card, CardBody, CardTitle, CardText, CardImg } from "reactstrap";
 import React from "react";
 /** Renders a listing.
  *
@@ -17,10 +17,11 @@ function ListingCard({ listing }) {
     <section className="Item">
       <Card>
         <CardBody>
+          <CardImg top width="50%" src={images[0]} alt="Card image cap" />
           <CardTitle className="fw-bold text-center">{title}</CardTitle>
           <CardText className="font-italic">{description}</CardText>
-          <p>{price}/night</p>
-          <p>Located in: {zipcode}</p>
+          <p><b>{price}/night</b></p>
+          <p><b>Located in: </b>{zipcode}</p>
         </CardBody>
       </Card>
     </section>
