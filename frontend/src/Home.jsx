@@ -1,5 +1,6 @@
 import { Card, CardBody, CardTitle } from "reactstrap";
 import React from "react";
+import "./Home.css";
 
 /** Homepage
  *
@@ -15,9 +16,9 @@ function Home() {
   console.log("* Home");
 
   return (
-    <h1 className="text-3xl font-bold underline Home">
-      ShareBnb
-    </h1>
+    <div className="Home">
+      <h1 className="text-3xl font-bold underline Home">ShareBnb</h1>
+    </div>
   );
 }
 
