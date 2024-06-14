@@ -20,6 +20,7 @@ Design Decision
 # TODO
 
 **START HERE JUNE 14**
+- fix the form 
 - single listing component 
 - nav bar component 
 	- https://tailwindui.com/components/application-ui/navigation/navbars
