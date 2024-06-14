@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-from models import db, dbx, Listing, Image, User
+from models import db, dbx, Listing, Image
 
 from util.helpers import (upload_file_to_s3,
                           create_presigned_url,
