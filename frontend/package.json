@@ -20,14 +20,18 @@
     "@types/react-dom": "*",
     "@vitejs/plugin-react": "*",
     "jsdom": "*",
+    "msw": "*",
+    "tailwindcss": "^3.4.4",
     "vite": "*",
-    "vitest": "*",
-    "msw": "*"
+    "vitest": "*"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.19",
     "bootstrap": "*",
+    "postcss": "^8.4.38",
     "react": "*",
     "react-dom": "*",
-    "react-router-dom": "*"
+    "react-router-dom": "*",
+    "reactstrap": "*"
   }
 }
