@@ -61,16 +61,16 @@ test_listing5 = Listing(
 
 test_listing6 = Listing(
     host_username=DEFAULT_USER.username,
-    title="Home in Seattle",
-    description="my home #2",
+    title="Take a Break at Wye Lake",
+    description="Sitting directly on the lake, this home is fully remodeled and waiting for you to grab a drink and come relax on its huge private dock or take a spin around the lake in the provided pedal boat or kayaks!",
     price=200,
     zipcode="12345"
 )
 
 test_listing7 = Listing(
     host_username=DEFAULT_USER.username,
-    title="Take a Break at Wye Lake",
-    description="itting directly on the lake, this home is fully remodeled and waiting for you to grab a drink and come relax on its huge private dock or take a spin around the lake in the provided pedal boat or kayaks! ",
+    title="Amazing views at Oceanfront ",
+    description=" The unit is a remodeled 433 sqft, top floor corner unit with ocean and mountain views. Sunrise can be enjoyed in summer, sunset views in winter.",
     price=215,
     zipcode="87023"
 )

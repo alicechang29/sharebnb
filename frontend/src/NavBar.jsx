@@ -21,7 +21,7 @@ function NavBar() {
   const navigation = [
     { name: "Home", href: "/", current: true },
     { name: "Listings", href: "/listings", current: false },
-    { name: "NewListing", href: "/add-listing", current: false },
+    { name: "New Listing", href: "/add-listing", current: false },
   ];
 
   function classNames(...classes) {

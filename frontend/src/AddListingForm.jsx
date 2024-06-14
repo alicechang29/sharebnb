@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 
 const INITIAL_INPUT_DATA = {
@@ -26,7 +27,7 @@ function AddListingForm({ addListing }) {
 
   const [formData, setFormData] = useState(INITIAL_INPUT_DATA);
   //   const [alertMsg, setAlertMsg] = useState(false);
-
+  const navigate = useNavigate();
   /** Call parent function, converts form data id, resets form */
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -49,6 +50,7 @@ function AddListingForm({ addListing }) {
 
     setFormData(INITIAL_INPUT_DATA);
 
+    navigate("/listings");
     // updateAlertMsg(true);
   }
 
