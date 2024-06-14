@@ -77,7 +77,7 @@ function AddListingForm({ addListing }) {
   }
 
   return (
-    <form className="w-60" onSubmit={handleSubmit}>
+    <form className="w-4/5" onSubmit={handleSubmit}>
       <div className="space-y-12">
         <h2 className="text-base font-semibold leading-7 text-gray-900">
           Add Listing

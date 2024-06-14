@@ -7,7 +7,9 @@
     "start": "vite --open",
     "build": "vite build",
     "test": "vitest",
-    "test:cov": "vitest --coverage"
+    "test:cov": "vitest --coverage",
+    "build-css": "tailwindcss build -i ./src/output.css -o ./src/output.css",
+    "watch-css": "tailwindcss build -i ./src/output.css -o ./src/output.css --watch"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "*",
