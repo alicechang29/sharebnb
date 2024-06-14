@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+
 import { PhotoIcon } from "@heroicons/react/24/solid";
 
 const INITIAL_INPUT_DATA = {
@@ -77,7 +78,9 @@ function AddListingForm({ addListing }) {
   }
 
   return (
-    <form className="AddListingForm w-4/5" onSubmit={handleSubmit}>
+    <form className="AddListingForm w-4/5 mx-auto"
+      style={{ width: '80%', margin: '0 auto' }}
+      onSubmit={handleSubmit}>
       <div className="space-y-12">
         <h2 className="text-base font-semibold leading-7 text-gray-900">
           Add Listing
@@ -97,7 +100,7 @@ function AddListingForm({ addListing }) {
                 id="title"
                 autoComplete="title"
                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                placeholder="janesmith123"
+                placeholder="Title"
               />
             </div>
           </div>
@@ -174,10 +177,7 @@ function AddListingForm({ addListing }) {
           </label>
           <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
             <div className="text-center">
-              <PhotoIcon
-                className="mx-auto h-12 w-12 text-gray-300"
-                aria-hidden="true"
-              />
+
               <div className="mt-4 flex text-sm leading-6 text-gray-600">
                 <label
                   htmlFor="file-upload"
@@ -191,7 +191,6 @@ function AddListingForm({ addListing }) {
                     className="sr-only"
                   />
                 </label>
-                <p className="pl-1">or drag and drop</p>
               </div>
               <p className="text-xs leading-5 text-gray-600">
                 PNG, JPG, GIF up to 10MB
@@ -200,9 +199,20 @@ function AddListingForm({ addListing }) {
           </div>
         </div>
 
-        <button type="submit">Click Me</button>
+        <button type="submit" style={
+          {
+            backgroundColor: '#4A90E2',
+            color: 'white', padding: '10px 20px',
+            borderRadius: '5px',
+            border: 'none',
+            cursor: 'pointer'
+          }
+        }>
+          Add Listing
+        </button>
       </div>
     </form>
+
   );
 }
 

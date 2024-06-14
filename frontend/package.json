@@ -33,6 +33,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "bootstrap": "*",
     "react": "*",
+    "react-bootstrap": "^2.10.2",
     "react-dom": "*",
     "react-router-dom": "*",
     "reactstrap": "*"
