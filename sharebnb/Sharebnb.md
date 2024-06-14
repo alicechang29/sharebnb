@@ -20,7 +20,17 @@ Design Decision
 # TODO
 
 **START HERE JUNE 14**
+- single listing component 
+- nav bar component 
+	- https://tailwindui.com/components/application-ui/navigation/navbars
+- add tailwind to form 
+	- https://tailwindui.com/components/application-ui/forms/form-layouts
+- format homepage 
 - make seed data 
+- RIGHT AFTER LUNCH, PREPARE OUR DECK 
+	- https://docs.google.com/document/d/1I1NsKqkLS4aaGmhdxzuI57jfyIOe390E7sAiewHgSUA/edit
+	- our design flow 
+- If there is time, add a search bar 
 
 
 **START HERE JUNE 13**
@@ -38,7 +48,7 @@ Design Decision
   - Put all the **listing data** into an object -- DONE 
 	  - this needs to be serialized  -- DONE 
 - Flask - GET route for ALL Listings -- DONE 
-  - Send the **listing data ** to Front end
+  - Send the **listing data ** to Front end -- DONE 
 
 ```
 listing data = {
@@ -60,8 +70,8 @@ ImmutableMultiDict(
 
 
 - On React API
-  - Create an async function to get a single listing data
-  - Create async function to get all listing data
+  - Create an async function to get a single listing data -- DONE 
+  - Create async function to get all listing data -- DONE 
 - On React App
 
   - Display the listing data for each item in listing obj
