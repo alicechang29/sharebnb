@@ -19,6 +19,10 @@ Design Decision
 
 # TODO
 
+**START HERE JUNE 14**
+- make seed data 
+
+
 **START HERE JUNE 13**
 
 - Fix Image Model -- DONE 
