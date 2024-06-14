@@ -119,15 +119,7 @@ function AddListingForm({ addListing }) {
               defaultValue={""}
             />
           </div>
-          <p className="mt-3 text-sm leading-6 text-gray-600">
-            Write a few sentences about the space.
-          </p>
         </div>
-
-        <label htmlFor="price">Price</label>
-        <input type="text" name="price"></input>
-        <label htmlFor="zipcode">Zipcode</label>
-        <input type="text" name="zipcode"></input>
 
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -193,8 +185,8 @@ function AddListingForm({ addListing }) {
                 >
                   <span>Upload a file</span>
                   <input
-                    id="file-upload"
-                    name="file-upload"
+                    id="image"
+                    name="image"
                     type="file"
                     className="sr-only"
                   />
