@@ -8,6 +8,7 @@ const INITIAL_INPUT_DATA = {
   description: "",
   price: "",
   zipcode: "",
+  image: null
 };
 
 /**
@@ -25,59 +26,46 @@ const INITIAL_INPUT_DATA = {
 function AddListingForm({ addListing }) {
   console.log("AddListingForm");
 
-  //FIXME: formData not used at all
   const [formData, setFormData] = useState(INITIAL_INPUT_DATA);
-  //   const [alertMsg, setAlertMsg] = useState(false);
+
   const navigate = useNavigate();
-  /** Call parent function, converts form data id, resets form */
+
   function handleSubmit(evt) {
     evt.preventDefault();
     console.log("AddListing: handleSubmit");
 
-    const formData = new FormData();
+    const submissionData = new FormData();
 
-    formData.append("title", evt.target.title.value);
-    formData.append("description", evt.target.description.value);
-    formData.append("price", evt.target.price.value);
-    formData.append("zipcode", evt.target.zipcode.value);
-    formData.append("image", evt.target.image.files[0]);
+    submissionData.append("title", formData.title);
+    submissionData.append("description", formData.description);
+    submissionData.append("price", formData.price);
+    submissionData.append("zipcode", formData.zipcode);
+    submissionData.append("image", formData.image);
 
-    //TODO: to handle multiple images, need to append each individually to formData. THIS IS NOT AN ARRAY, FILELIST IS ITS OWN OBJECT
+
+    //TODO: to handle multiple images, need to append each individually to formData.
+    //THIS IS NOT AN ARRAY, FILELIST IS ITS OWN OBJECT
     // formData.append('multi-images', evt.target.multifiles.files);
 
-    console.log("formData:", formData);
+    console.log("formData:", submissionData);
 
-    addListing(formData);
+    addListing(submissionData);
 
     setFormData(INITIAL_INPUT_DATA);
 
     navigate("/listings");
-    // updateAlertMsg(true);
+
   }
 
-  /** FIXME: Update non-numeric form inputs. */
+  /** Update formData state */
   function handleChange(evt) {
-    const { name, value } = evt.target;
-
-    if (name === "type") {
-      setFormData((currData) => ({
-        ...currData,
-        [name]: value,
-      }));
-    } else {
-      setFormData((currData) => ({
-        ...currData,
-        menuItem: { ...currData.menuItem, [name]: value },
-      }));
-    }
-
-    updateAlertMsg(false);
+    const { name, value, files } = evt.target;
+    setFormData(fData => ({
+      ...fData,
+      [name]: files ? files[0] : value
+    }));
   }
 
-  /** FIXME:Sets state of AlertMsg */
-  function updateAlertMsg(status) {
-    setAlertMsg(status);
-  }
 
   return (
     <div className="pt-5 pb-20">
@@ -100,7 +88,8 @@ function AddListingForm({ addListing }) {
                     type="text"
                     name="title"
                     id="title"
-                    autoComplete="title"
+                    required
+                    onChange={handleChange}
                     className="block flex-1 rounded-md border-1 border-slate-300 bg-transparent py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     placeholder="Joshua Tree Sky House"
                   />
@@ -121,6 +110,8 @@ function AddListingForm({ addListing }) {
                 id="description"
                 name="description"
                 rows={3}
+                required
+                onChange={handleChange}
                 className="block w-full rounded-md border-1 border-slate-300 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 defaultValue={""}
               />
@@ -142,10 +133,11 @@ function AddListingForm({ addListing }) {
                 </label>
                 <div className="mt-2">
                   <input
-                    type="text"
+                    type="number"
                     name="price"
                     id="price"
-                    autoComplete="$1,000"
+                    onChange={handleChange}
+                    required
                     className="block w-full rounded-md border-1 border-slate-300 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -163,7 +155,9 @@ function AddListingForm({ addListing }) {
                     type="text"
                     name="zipcode"
                     id="zipcode"
-                    autoComplete="zipcode"
+                    maxLength={10}
+                    onChange={handleChange}
+                    required
                     className="block w-full rounded-md border-1 border-slate-300 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -189,11 +183,16 @@ function AddListingForm({ addListing }) {
                     htmlFor="file-upload"
                     className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                   >
-                    <input id="image" name="image" type="file" className="" />
+                    <input
+                      id="image"
+                      name="image"
+                      type="file"
+                      onChange={handleChange}
+                      required />
                   </label>
                 </div>
                 <p className="text-xs leading-5 text-gray-600">
-                  PNG, JPG, GIF up to 10MB
+                  PNG, JPG, JPEG
                 </p>
               </div>
             </div>
