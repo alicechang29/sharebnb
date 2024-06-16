@@ -52,7 +52,10 @@ def create_presigned_url(object_key):
     try:
         response = S3_CLIENT.generate_presigned_url(
             'get_object',
-            Params={'Bucket': S3_BUCKET, 'Key': object_key},
+            Params={
+                'Bucket': S3_BUCKET,
+                'Key': object_key
+                },
             ExpiresIn=3600)
         print("CREATING PRE SIGNED URL", response)
         return response
