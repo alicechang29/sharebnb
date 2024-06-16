@@ -10,7 +10,7 @@ class ShareBnBAPI {
 
   /** Sends image data to Flask server*/
   static async sendFormDataToServer(formData) {
-    console.log("add data server", formData);
+    console.log("sendFormDataToServer", formData);
 
     //FIXME:  do a try & catch - return the err and have the front end handle the error
 
