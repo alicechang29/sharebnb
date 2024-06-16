@@ -25,6 +25,7 @@ const INITIAL_INPUT_DATA = {
 function AddListingForm({ addListing }) {
   console.log("AddListingForm");
 
+  //FIXME: formData not used at all
   const [formData, setFormData] = useState(INITIAL_INPUT_DATA);
   //   const [alertMsg, setAlertMsg] = useState(false);
   const navigate = useNavigate();
