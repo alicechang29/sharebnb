@@ -48,11 +48,15 @@ function App() {
     setListingsFetch({ listings, isLoading: false });
   }
 
-
   /**Handling submission of listing */
   async function addListing(formData) {
+    console.log("addListing", formData);
+
     try {
       await ShareBnBAPI.sendFormDataToServer(formData);
+      //FIXME: not sure how to add new listing to state as a form data object.
+      //THIS is how to get the form data values BUT how to handle the image?
+      console.log("entries", Object.fromEntries(formData.entries()));
       fetchListings();
 
     } catch (err) {
