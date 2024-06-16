@@ -19,6 +19,22 @@ Design Decision
 
 # TODO
 
+**START HERE JUNE 15 **
+- Create routes for User Auth 
+	- Login 
+	- Signup 
+- Create middleware for User Auth 
+
+
+**Running list of things to research/fix:** 
+- FormData - what is it?? 
+- Fix the Add New Listing Form - not using state 
+	- How is this working right now?? 
+
+
+
+
+
 **START HERE JUNE 14**
 - fix the form 
 - single listing component -- DONE 
