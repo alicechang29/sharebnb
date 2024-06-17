@@ -3,8 +3,6 @@
 # TODO: discuss decision on keeping all models in one file
 
 from flask_sqlalchemy import SQLAlchemy
-
-from flask import Flask
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt()
 
@@ -102,8 +100,6 @@ class Listing(db.Model):
         print("listing created")
         return listing
 
-# TODO: ask why we do db.sessio for add and a db query for delete??
-
     @classmethod
     def delete(self):
         """Delete a listing."""
@@ -144,18 +140,20 @@ class User(db.Model):
     username = db.mapped_column(
         db.String(100),
         primary_key=True,
-        nullable=False
+        nullable=False,
+        unique=True,
+    )
+
+    email = db.mapped_column(
+        db.String(50),
+        primary_key=True,
+        nullable=False,
+        unique=True,
     )
 
     password = db.mapped_column(
         db.String(100),
         nullable=False,
-    )
-
-    email = db.mapped_column(
-        db.String(50),
-        nullable=False,
-        unique=True,
     )
 
     first_name = db.mapped_column(
@@ -168,7 +166,7 @@ class User(db.Model):
         nullable=False
     )
 
-    image_object_key = db.mapped_column(
+    profile_image_object_key = db.mapped_column(
         db.String(1500),
     )
 
@@ -190,8 +188,8 @@ class User(db.Model):
         password,
         first_name,
         last_name,
-        image_obj_key
-        ):
+        profile_image_object_key
+    ):
         """Register new user.
 
         Hashes password and adds user to session.
@@ -205,7 +203,7 @@ class User(db.Model):
             password=hashed_pwd,
             first_name=first_name,
             last_name=last_name,
-            image_obj_key=image_obj_key
+            profile_image_object_key=profile_image_object_key
         )
 
         db.session.add(user)
