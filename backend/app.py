@@ -2,11 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
-import json
-import logging
-from datetime import datetime, timedelta, timezone
 from flask_jwt_extended import (create_access_token,
-                                get_jwt,get_jwt_identity,
                                 unset_jwt_cookies,
                                 jwt_required,
                                 JWTManager)
@@ -19,8 +15,12 @@ from util.helpers import (upload_file_to_s3,
                           create_object_key,
                           assign_url_for_images)
 
+from schemas.forms import UserRegistrationForm, UserAuthForm
+from flask_wtf.csrf import CSRFProtect
+
 app = Flask(__name__)
 CORS(app)
+csrf = CSRFProtect(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     "DATABASE_URL", "postgresql:///sharebnb"
 )
@@ -30,6 +30,7 @@ app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config['aws_access_key_id'] = os.environ['aws_access_key_id']
 app.config['aws_secret_access_key'] = os.environ['aws_secret_access_key']
 app.config['JWT_SECRET_KEY'] = os.environ['JWT_SECRET_KEY']
+app.config['WTF_CSRF_ENABLED'] = False
 
 
 load_dotenv()
@@ -48,6 +49,7 @@ def add_listing():
     Adds new listing to Listing table in DB
     Adds new image to Images table in DB
     """
+    # FIXME: add form validation
 
     # send image to S3
     listing_images = request.files['image']
@@ -137,29 +139,32 @@ def get_single_listing(listing_id):
 
     return jsonify(listing=serialized_listing)
 
-@app.post("/token")
-def create_token():
+
+@app.post("/login")
+def login():
     """
-    POST /token:  { username, password } => { token }
-    Returns JWT token which can be used to authenticate further requests.
+    POST /login: takes in username and password within request.form
+    Returns JSON { access_token: token }
     Authorization required: none
     """
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
+    user_data = request.form
 
-    if not username or not password:
-        logging.warning("Missing username or password")
-        return jsonify({"msg": "Missing username or password"}), 400
+    username = user_data["username"],
+    password = user_data["password"]
 
-    if User.authenticate(username, password):
+    form = UserAuthForm(
+        username=username,
+        password=password
+    )
+
+    # FIXME: add in try/excepts
+    if form.validate():
+        User.authenticate(username, password)
         access_token = create_access_token(identity=username)
         response = {"access_token": access_token}
         return jsonify(response)
-
     else:
-        logging.warning(f"Authentication failed for user: {username}")
-        return jsonify({"msg": "Wrong username or password"}), 401
-
+        return jsonify({"errors": form.errors})
 
 
 @app.post("/logout")
@@ -168,51 +173,60 @@ def logout():
     POST /logout
     Removes JWT token from session.
     """
+    # FIXME:
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)
     return response
+
 
 @app.post("/register")
 def register():
     """
     POST /register
+    Takes in form data and validates.
     Registers user and returns JWT token which can be used to authenticate
     further requests.
+    Returns JSON {access_token: token}
     """
-
-    user_image = request.files['image']
-    # send image to S3
-    if not user_image:
-        image_object_key = None
-    else:
-        user_profile_img = user_image
-        print("upload user profile image", user_profile_img)
-
-        image_object_key = create_object_key()
-        upload_file_to_s3(object_key=image_object_key, file=user_profile_img)
-
-    # save user data to database
-
     user_data = request.form
-    #FIXME: maybe use WTFORMS to validate the info
-    #https://www.reddit.com/r/vuejs/comments/16oqerq/validating_forms_with_flask_backend/
 
     username = user_data["username"]
-    password = user_data["password"]
     email = user_data["email"]
+    password = user_data["password"]
     first_name = user_data["first_name"]
     last_name = user_data["last_name"]
-    image_object_key = image_object_key
+    user_image = request.files['image']
 
-    User.register(
-        username,
-        password,
-        email,
-        first_name,
-        last_name,
-        image_object_key
+    form = UserRegistrationForm(
+        username=username,
+        email=email,
+        password=password,
+        first_name=first_name,
+        last_name=last_name,
+        user_image=user_image
+    )
+
+    # FIXME: add in try/excepts
+    if form.validate():
+        # send image to S3
+        profile_image_object_key = create_object_key()
+        upload_file_to_s3(object_key=profile_image_object_key,
+                          file=user_image)
+        print("upload user profile image", user_image)
+
+        # saving to DB
+        User.register(
+            username,
+            email,
+            password,
+            first_name,
+            last_name,
+            profile_image_object_key
         )
 
-    print("Saving to DB")
+        access_token = create_access_token(identity=email)
+        response = {"access_token": access_token}
+        return jsonify(response)
 
-    return jsonify({"msg": f"{username} registered."}), 200
+    else:
+        return jsonify({"errors": form.errors})
