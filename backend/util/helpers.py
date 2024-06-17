@@ -48,7 +48,7 @@ def create_presigned_url(object_key):
 
     # Generate a presigned URL for the S3 object
 
-    print("CALLING PRE-SIGNED URL")
+    print("create_presigned_url")
     try:
         response = S3_CLIENT.generate_presigned_url(
             'get_object',
