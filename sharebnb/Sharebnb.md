@@ -27,9 +27,11 @@ Design Decision
 
 
 **Running list of things to research/fix:** 
-- FormData - what is it?? 
-- Fix the Add New Listing Form - not using state 
-	- How is this working right now?? 
+- Saving new listing in STATE 
+	- how to display an image file? 
+	- MAYBE can check for image data type 
+		- if it is a URL, display it as src 
+		- if it is not a URL, display it as file???? 
 
 
 
