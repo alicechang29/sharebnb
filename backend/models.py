@@ -168,10 +168,8 @@ class User(db.Model):
         nullable=False
     )
 
-    image_url = db.mapped_column(
-        db.String(255),
-        nullable=False,
-        default=DEFAULT_IMAGE_URL,
+    image_object_key = db.mapped_column(
+        db.String(1500),
     )
 
     zipcode = db.mapped_column(
@@ -185,8 +183,16 @@ class User(db.Model):
         cascade="all, delete-orphan")
 
     @classmethod
-    def signup(cls, username, email, password, image_url=DEFAULT_IMAGE_URL):
-        """Sign up user.
+    def register(
+        cls,
+        username,
+        email,
+        password,
+        first_name,
+        last_name,
+        image_obj_key
+        ):
+        """Register new user.
 
         Hashes password and adds user to session.
         """
@@ -197,7 +203,9 @@ class User(db.Model):
             username=username,
             email=email,
             password=hashed_pwd,
-            image_url=image_url,
+            first_name=first_name,
+            last_name=last_name,
+            image_obj_key=image_obj_key
         )
 
         db.session.add(user)
