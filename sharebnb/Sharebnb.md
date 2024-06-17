@@ -12,64 +12,71 @@ Goals
 4. send form data to db
 5. send file to s3
 
-Design Decision 
-- making the view function the conductor 
-- adds values to the DB 
-- sends the image to the S3 bucket 
+Design Decision
+- making the view function the conductor
+- adds values to the DB
+- sends the image to the S3 bucket
 
 # TODO
 
-**START HERE JUNE 15 **
-- Create routes for User Auth 
-	- Login 
-	- Signup 
-- Create middleware for User Auth 
+**START HERE JUNE 17**
+- Create routes for User Auth
+	- Login - NOT TESTED
+	- Registration - DONE
+	- Logout - NOT TESTED
+- Create form validation for all POST routes
+	- Registration -- DONE and TESTED
+	- Add New Listing form validation
+		- WTForms
+- Create Login Component
+	- https://dev.to/nagatodev/how-to-add-login-authentication-to-a-flask-and-react-application-23i7
+- Add Middleware for auth
 
 
-**Running list of things to research/fix:** 
-- Saving new listing in STATE 
-	- how to display an image file? 
-	- MAYBE can check for image data type 
-		- if it is a URL, display it as src 
-		- if it is not a URL, display it as file???? 
+**Running list of things to research/fix:**
+- Saving new listing in STATE
+	- how to display an image file?
+	- MAYBE can check for image data type
+		- if it is a URL, display it as src
+		- if it is not a URL, display it as file????
 
 
 
 
 
 **START HERE JUNE 14**
-- fix the form 
-- single listing component -- DONE 
-- nav bar component -- DONE 
+- fix the form
+- single listing component -- DONE
+- nav bar component -- DONE
 	- https://tailwindui.com/components/application-ui/navigation/navbars
-- add tailwind to form  
+- add tailwind to form
 	- https://tailwindui.com/components/application-ui/forms/form-layouts
-- format homepage -- DONE 
-- make seed data -- DONE 
-- RIGHT AFTER LUNCH, 
-	- Do redirect after form submit 
-- PREPARE OUR DECK 
+- format homepage -- DONE
+- make seed data -- DONE
+- RIGHT AFTER LUNCH,
+	- Do redirect after form submit
+- PREPARE OUR DECK
 	- https://docs.google.com/document/d/1I1NsKqkLS4aaGmhdxzuI57jfyIOe390E7sAiewHgSUA/edit
-	- our design flow 
-- If there is time, add a search bar 
+	- our design flow
+- If there is time, add a search bar
 
 
 **START HERE JUNE 13**
 
-- Fix Image Model -- DONE 
-- Flask - POST route  -- DONE 
-  - Create an object_key for image  -- DONE 
-  - update DB with listing information including Image object key  -- DONE 
+- Fix Image Model -- DONE
+- Flask - POST route  -- DONE
+  - Create an object_key for image  -- DONE
+  - update DB with listing information including Image object key  -- DONE
   - update S3 Bucket - DONE
-- Flask - GET route by listing ID -- DONE 
-  - query the DB Listing table for the listing data by listing id -- DONE 
-  - query the DB Image table for all images by listing id -- DONE 
-  - Map over the Image query -- DONE 
-  - create the URL for each image -- DONE 
-  - Put all the **listing data** into an object -- DONE 
-	  - this needs to be serialized  -- DONE 
-- Flask - GET route for ALL Listings -- DONE 
-  - Send the **listing data ** to Front end -- DONE 
+- Flask - GET route by listing ID -- DONE
+  - query the DB Listing table for the listing data by listing id -- DONE
+  - query the DB Image table for all images by listing id -- DONE
+  - Map over the Image query -- DONE
+  - create the URL for each image -- DONE
+  - Put all the **listing data** into an object -- DONE
+	  - this needs to be serialized  -- DONE
+- Flask - GET route for ALL Listings -- DONE
+  - Send the **listing data ** to Front end -- DONE
 
 ```
 listing data = {
@@ -91,8 +98,8 @@ ImmutableMultiDict(
 
 
 - On React API
-  - Create an async function to get a single listing data -- DONE 
-  - Create async function to get all listing data -- DONE 
+  - Create an async function to get a single listing data -- DONE
+  - Create async function to get all listing data -- DONE
 - On React App
 
   - Display the listing data for each item in listing obj
