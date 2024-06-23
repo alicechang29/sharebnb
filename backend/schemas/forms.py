@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, TextAreaField
 from wtforms.validators import InputRequired, Email, Length
 from flask_wtf.file import FileField
 # ^^ has a FileRequired
@@ -67,4 +67,40 @@ class UserAuthForm(FlaskForm):
             InputRequired(),
             Length(min=8)
         ]
+    )
+
+
+class NewListingForm(FlaskForm):
+    """Form for validating new listing inputs."""
+
+    title = StringField(
+        "title",
+        validators=[
+            InputRequired()
+        ]
+    )
+
+    description = TextAreaField(
+        "description"
+    )
+
+    password = StringField(
+        "price",
+        validators=[
+            InputRequired(),
+            # TODO: add in currency
+        ]
+    )
+
+    zipcode = StringField(
+        "zipcode",
+        validators=[
+            InputRequired(),
+            Length(max=10)
+            # TODO: how to validate this?
+        ]
+    )
+
+    listing_image = FileField(
+        "listing_image"
     )
