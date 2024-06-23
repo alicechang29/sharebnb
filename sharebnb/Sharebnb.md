@@ -19,10 +19,17 @@ Design Decision
 
 # TODO
 
-**START HERE JUNE 17**
+**START HERE JUNE 23**
+
+- Handle image file validation 
+	- https://stackoverflow.com/questions/15772975/flask-get-the-size-of-request-files-object
+	- https://wtforms.readthedocs.io/en/3.1.x/fields/
+	
+	https://stackoverflow.com/questions/5697605/limit-the-size-of-a-file-upload-html-input-element
+	`<input id="image" name="image" type="file" accept=".png, .jpg, .jpeg" class="form-control">`
 - Create routes for User Auth
 	- Login - NOT TESTED
-	- Registration - DONE
+	- Registration - missing image validation 
 	- Logout - NOT TESTED
 - Create form validation for all POST routes
 	- Registration -- DONE and TESTED
