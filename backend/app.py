@@ -17,6 +17,7 @@ from util.helpers import (upload_file_to_s3,
 
 from schemas.forms import UserRegistrationForm, UserAuthForm
 from flask_wtf.csrf import CSRFProtect
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 CORS(app)
@@ -141,7 +142,7 @@ def get_single_listing(listing_id):
 
 
 @app.post("/login")
-def login():
+def create_token():
     """
     POST /login: takes in username and password within request.form
     Returns JSON { access_token: token }
@@ -173,7 +174,7 @@ def logout():
     POST /logout
     Removes JWT token from session.
     """
-    # FIXME:
+    # FIXME: HOW DO YOU TEST THIS??
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)
     return response
@@ -195,7 +196,8 @@ def register():
     password = user_data["password"]
     first_name = user_data["first_name"]
     last_name = user_data["last_name"]
-    user_image = request.files['image']
+    zipcode = user_data["zipcode"]
+    user_image = request.files['user_image']
 
     form = UserRegistrationForm(
         username=username,
@@ -203,30 +205,37 @@ def register():
         password=password,
         first_name=first_name,
         last_name=last_name,
+        zipcode=zipcode,
         user_image=user_image
     )
 
-    # FIXME: add in try/excepts
     if form.validate():
-        # send image to S3
-        profile_image_object_key = create_object_key()
-        upload_file_to_s3(object_key=profile_image_object_key,
-                          file=user_image)
-        print("upload user profile image", user_image)
+        try:
+            # send image to S3
+            profile_image_object_key = create_object_key()
+            print("THE IMAGE", profile_image_object_key)
+            upload_file_to_s3(object_key=profile_image_object_key,
+                              file=user_image)
+            print("upload user profile image", user_image)
 
-        # saving to DB
-        User.register(
-            username,
-            email,
-            password,
-            first_name,
-            last_name,
-            profile_image_object_key
-        )
+            # saving to DB
+            User.register(
+                username,
+                email,
+                password,
+                first_name,
+                last_name,
+                zipcode,
+                profile_image_object_key=profile_image_object_key
+            )
 
-        access_token = create_access_token(identity=email)
-        response = {"access_token": access_token}
-        return jsonify(response)
+            access_token = create_access_token(identity=email)
+            response = {"access_token": access_token}
+            return jsonify(response), 201
+
+        except IntegrityError as e:
+            error_message = str(e.orig)
+            return jsonify({"errors": error_message}), 400
 
     else:
-        return jsonify({"errors": form.errors})
+        return jsonify({"errors": form.errors}), 400
