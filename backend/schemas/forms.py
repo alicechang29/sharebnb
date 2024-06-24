@@ -53,11 +53,10 @@ class UserRegistrationForm(FlaskForm):
 class UserAuthForm(FlaskForm):
     """Form for validating user auth inputs."""
 
-    email = StringField(
-        "email",
+    username = StringField(
+        "username",
         validators=[
             InputRequired(),
-            Email(),
         ]
     )
 
