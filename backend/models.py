@@ -4,6 +4,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from sqlalchemy.exc import IntegrityError
 bcrypt = Bcrypt()
 
 db = SQLAlchemy()
@@ -146,7 +147,6 @@ class User(db.Model):
 
     email = db.mapped_column(
         db.String(50),
-        primary_key=True,
         nullable=False,
         unique=True,
     )
@@ -188,6 +188,7 @@ class User(db.Model):
         password,
         first_name,
         last_name,
+        zipcode,
         profile_image_object_key
     ):
         """Register new user.
@@ -203,10 +204,14 @@ class User(db.Model):
             password=hashed_pwd,
             first_name=first_name,
             last_name=last_name,
+            zipcode=zipcode,
             profile_image_object_key=profile_image_object_key
         )
 
         db.session.add(user)
+        db.session.commit()
+
+        print("user created")
         return user
 
     @classmethod
