@@ -29,7 +29,7 @@
 <h3 align="center">ShareBnB</h3>
 
   <p align="center">
-    Sharebnb is an Airbnb clone created during my time at Rithm School with my partner, @ndrjao, built over the course of 4 days.
+    ShareBnB is an Airbnb clone created during my time at Rithm School with my partner, @ndrjao, built over the course of 4 days.
     The backend was built with Flask, WTForms, SQLAlchemy, PostgreSQL.
     The frontend was built with React and Javascript.
     Images are stored within AWS S3 buckets.
