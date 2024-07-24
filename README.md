@@ -35,6 +35,8 @@
     Images are stored within AWS S3 buckets.
 
   </p>
+  ![product-screenshot](sharebnb/AllListings.png)
+
 </div>
 
 <!-- GETTING STARTED -->
