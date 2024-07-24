@@ -29,17 +29,13 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">ShareBnB</h3>
 
   <p align="center">
     Sharebnb is an Airbnb clone created during my time at Rithm School with my partner, @ndrjao, built over the course of 4 days.
     The backend was built with Flask, WTForms, SQLAlchemy, PostgreSQL.
     The frontend was built with React and Javascript.
-
-    Users can add new listings via the form, where images are saved in AWS S3,
-    configured with the Boto SDK.
-
-    <!-- <a href="https://github.com/alicechang29/sharebnb">View Demo</a> -->
+    Images are stored within AWS S3 buckets.
 
   </p>
 </div>
