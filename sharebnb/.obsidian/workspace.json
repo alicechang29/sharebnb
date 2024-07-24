@@ -18,8 +18,19 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "50e7c1c05d59223e",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.6.5"
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,7 +157,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "85e7d4ea55115af3",
+  "active": "50e7c1c05d59223e",
   "lastOpenFiles": [
     "Sharebnb.md"
   ]
