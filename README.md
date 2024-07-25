@@ -30,14 +30,19 @@
 
   <p align="center">
     ShareBnB is an Airbnb clone created during my time at Rithm School with my partner, @ndrjao, built over the course of 4 days.
-    The backend was built with Flask, WTForms, SQLAlchemy, PostgreSQL.
-    The frontend was built with React and Javascript.
+    <br>
+    The backend was built with: Python, Flask, WTForms, SQLAlchemy, PostgreSQL.
+    <br>
+    The frontend was built with Javascript, React, Tailwind.
+    <br>
     Images are stored within AWS S3 buckets.
 
   </p>
-  ![product-screenshot](sharebnb/AllListings.png)
 
 </div>
+
+[![product-screenshot](sharebnb/Listings.png)]
+[![product-screenshot](sharebnb/Addform.png)]
 
 <!-- GETTING STARTED -->
 
@@ -52,7 +57,12 @@ git clone https://github.com/alicechang29/sharebnb.git
 ```
 
 2. cd into backend/
-3. Start Python Virtual Environment `python3 -m venv venv`
+3. Start Python Virtual Environment
+
+```sh
+python3 -m venv venv
+```
+
 4. Activate Venv and Pip install requirements
 
 ```sh
@@ -60,13 +70,25 @@ $ source venv/bin/activate
 (venv) $ pip3 install -r requirements.txt
 ```
 
-5. Start the Flask server `flask run -p 5001`
+5. Start the Flask server
+
+```sh
+flask run -p 5001
+```
+
 6. Open another terminal window
 7. cd into frontend/
-8. NPM install `npm i`
-9. `npm run start`
+8. NPM install
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+```sh
+npm i
+```
+
+9. Start npm
+
+```sh
+npm run start
+```
 
 ### My Learnings
 
@@ -76,6 +98,15 @@ I learned a lot during this project, such as:
 - It is possible to send multi-part forms using Insomnia (we did not know this initially and created an entire form in React to test if the image upload to S3 worked)
 - Using the POST listings route as a "conductor function" to handle adding listings data to the database, generating a UUID for images uploaded in order to store it in S3, and uploading the image to S3
 - Form data is sent to backend as an object, and if there are images, it will be within request.files
+
+### In the Future
+
+There are many more features that I want to add to this project, which include:
+
+- Finishing user authentication/authorization
+- Adding Tests
+- Search and filtering
+- User Profiles
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
